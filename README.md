@@ -3,9 +3,9 @@ This R code is meant for those who would like to replicate the analysis run on t
 ## Data
 1. The data is publicly available on www.measuredhs.com : Data usage is free of charge for scientific usage. Please apply for "Nigeria 2013 - survey data" and "Nigeria 2013 - GPS data".  
 2. To get to the data you need download "Children's recode - NGKR6ADT.ZIP" from here 
-**https://dhsprogram.com/customcf/legacy/data/download_dataset.cfm?Filename=NGKR6ADT.zip&Tp=1&Ctry_Code=NG&surv_id=438&dm=1&dmode=nm**
+https://dhsprogram.com/customcf/legacy/data/download_dataset.cfm?Filename=NGKR6ADT.zip&Tp=1&Ctry_Code=NG&surv_id=438&dm=1&dmode=nm
 and the SHP file set with subnational boundaries from here (for selection aid see also "Finding_correct_shapefile.png")
-**https://spatialdata.dhsprogram.com/boundaries/#view=table&countryId=NG**
+https://spatialdata.dhsprogram.com/boundaries/#view=table&countryId=NG
 3. Then place the following files in the folder "01_raw-data":
 - NGKR6AFL.DTA
 - sdr_subnational_boundaries.cpg  
@@ -18,7 +18,7 @@ and the SHP file set with subnational boundaries from here (for selection aid se
 - sdr_subnational_boundaries.shx  
 
 ## Analysis
-Run the file "Run-code.R". Potentially adjust it for running it on a cluster server and definitely adjust the location your local BayesX is run from. The script will automatically call all the other scripts sequentially and generate the necessary output. 
+Run the file "Run-code.R". Potentially adjust it for running it on a **cluster server** (highly recommended) and definitely adjust the location your local BayesX is run from. The script will automatically call all the other scripts sequentially and generate the necessary output. 
 
 ## Reproducibility
 This repository is equipped with a local library generated with renv. To use the same package versions used for the original analysis follow the prompt in RStudio upon opening the project and run "renv::restore()".
