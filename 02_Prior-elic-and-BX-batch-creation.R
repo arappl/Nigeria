@@ -37,8 +37,8 @@ mclapply(1:nrow(sdPinput), function(i)
   alpha0 <-  sdPinput[i, 1]
   c0 <- sdPinput[i, 2]
   
-  
-  if (!file.exists("./03_output/01_BayesX/02_Prior-elic-and-BX-batch-creation_Hyperparameter.RData")) {
+  hparfile <- list.files("./03_output/01_BayesX/", "Hyperparameter", full.names = T, recursive = F)
+  if (!file.exists(hparfile)) {
       hyperpara <- mclapply(which(names(dat) %in% relvar), function(z) {
         # elicitate for linear components
         Z <- as.matrix(dat[,z])
