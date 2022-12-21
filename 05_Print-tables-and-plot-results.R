@@ -1,5 +1,12 @@
 env.pre <- ls()
 
+if (!require("parallel")) {install.packages("parallel")}
+if (!require("mboost")) {install.packages("mboost")}
+if (!require("ggplot2")) {install.packages("ggplot2")}
+if (!require("kableExtra")) {install.packages("kableExtra")}
+if (!require("dplyr")) {install.packages("dplyr")}
+
+
 # Code contains:
 ## 1. print tabular overview of data (Table 1) 
 ## 2. plot estimation results (Figures 8, 25, 9, 10)
@@ -54,8 +61,10 @@ ndat <- data.frame(cbind(rbind(ndat0, ndat1), "X3" = c("Description", desc[1:5],
 ndat <- ndat[, c(3, 1, 2)]
 names(ndat) <- rep("", 3)
 
+df <- 
 ndat %>%
   kbl(booktabs = T, 
+      format = "html", 
       align = c("l", "l", "c", "c"),
       caption = "Candidate variables in the Nigeria childhood malnutrition data set") %>%
   # kable_paper(full_width = F, latex_options = c("striped", "hold_position")) %>%
@@ -63,9 +72,14 @@ ndat %>%
   row_spec(1, bold=T) %>%
   pack_rows("Continuous/ Discrete", 2, 6) %>%
   row_spec(7, bold=T) %>%
-  pack_rows("Binary", 7, nrow(ndat)) %>%
-  save_kable("./04_figures-and-tables/05_Print-tables-and-plot-results_Overview-data-Table-1.pdf")
+  pack_rows("Binary", 7, nrow(ndat)) 
+if(cluster == T) {
+  writeLines(df, "./04_figures-and-tables/05_Print-tables-and-plot-results_Overview-data-Table-1.txt")
+} else {
+  save_kable(df, "./04_figures-and-tables/05_Print-tables-and-plot-results_Overview-data-Table-1.pdf")
+}
 
+rm(df)
 
 ## 2. plot estimation results (Figures 8, 25, 9, 10) #######################################################################
 # load BX results
@@ -281,6 +295,7 @@ nam <- gsub("Selection_freq_.*", "NBPSS", names(selection))
 nam <- gsub("Selection_boost_.*", "Boosting", nam)
 names(selection) <- nam
 
+df <- 
 selection %>%
   kbl(booktabs = T, 
       align = c("l", "c", "c", "c", "c", "c", "c"),
@@ -288,7 +303,11 @@ selection %>%
   # kable_paper(full_width = F) %>%
   # kable_styling(latex_options = "scale_down") %>%
   kable_styling(latex_options = c("hold_position")) %>%
-  add_header_above(c(" " = 1, "tau = 0.05" = 2, "tau = 0.1" = 2, "tau = 0.5" = 2)) %>%
-  save_kable("./04_figures-and-tables/05_Print-tables-and-plot-results_Selection-Table-2.pdf")
+  add_header_above(c(" " = 1, "tau = 0.05" = 2, "tau = 0.1" = 2, "tau = 0.5" = 2)) 
+if(cluster == T) {
+  writeLines(df, "./04_figures-and-tables/05_Print-tables-and-plot-results_Selection-Table-2.txt")
+} else {
+  save_kable(df, "./04_figures-and-tables/05_Print-tables-and-plot-results_Selection-Table-2.pdf")
+}
 
 rm(list = grep(paste(env.pre, collapse = "|"), ls(), invert = T, value = T))

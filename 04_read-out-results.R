@@ -1,5 +1,13 @@
 env.pre <- ls()
 
+if (!require("BayesX")) {install.packages("BayesX")}
+if (!require("parallel")) {install.packages("parallel")}
+if (!require("mboost")) {install.packages("mboost")}
+if (!require("ggplot2")) {install.packages("ggplot2")}
+if (!require("kableExtra")) {install.packages("kableExtra")}
+if (!require("dplyr")) {install.packages("dplyr")}
+
+
 ### READ OUT BX ######################################################## ##
 taudirs <- list.dirs("./03_output/01_BayesX", recursive = F)
 

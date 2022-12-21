@@ -1,4 +1,8 @@
 env.pre <- ls()
+if (!require("foreign")) {install.packages("foreign")}
+if (!require("car")) {install.packages("car")}
+if (!require("BayesX")) {install.packages("BayesX")}
+
 # 2013 Data
 nigeriaraw <- read.dta("./01_raw-data/NGKR6AFL.DTA") # 2013 Data
 vars <- character(0)

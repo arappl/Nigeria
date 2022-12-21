@@ -1,13 +1,23 @@
 env.pre <- ls()
 
+if (!require("BayesX")) {install.packages("BayesX")}
+if (!require("sdPrior")) {install.packages("sdPrior")}
+if (!require("MASS")) {install.packages("MASS")}
+if (!require("parallel")) {install.packages("parallel")}
+
+if(!exists("cores")) {
+  cluster <- T
+  cores <- ifelse(cluster, 20, 1)
+}
+
 # read in neighbour matrix
 grafiles <- list.files("./02_data", ".gra", full.names = T, recursive = F)
 Kreg <- lapply(grafiles, read.gra)
 
 tau <-c(0.05, 0.1, 0.5)
-BI <- c(3000, 6000, 2000)
-step <- c(320, 297, 150)
-seed <- c(321, 333, 666)
+BI <- c(3000, 3000, 2000)
+step <- c(224, 158, 53)
+seed <- c(333, 123, 583) # 321 111 583
 
 taudf <- data.frame("tau" = tau,
                     "iter" = BI + step * 1000,
@@ -27,9 +37,9 @@ nlinvar <- c("cage",
 
 dat <- read.table("./02_data/nigeriaBXc.raw", header = T)
 relvar <- names(dat[, -grep("stunting|REGEN", names(dat))])
-spatvar <- names(dat[, grep("REGEN", names(dat))])
+spatvar <- grep("REGEN", names(dat), value = T)
 
-names(Kreg) <- spatvar[2:1]
+names(Kreg) <- spatvar
 
 mclapply(1:nrow(sdPinput), function(i)
 {
@@ -37,8 +47,8 @@ mclapply(1:nrow(sdPinput), function(i)
   alpha0 <-  sdPinput[i, 1]
   c0 <- sdPinput[i, 2]
   
-  hparfile <- list.files("./03_output/01_BayesX/", "Hyperparameter", full.names = T, recursive = F)
-  if (!file.exists(hparfile)) {
+  
+  if (!file.exists("./03_output/01_BayesX/02_Prior-elic-and-BX-batch-creation_Hyperparameter.RData")) {
       hyperpara <- mclapply(which(names(dat) %in% relvar), function(z) {
         # elicitate for linear components
         Z <- as.matrix(dat[,z])
@@ -113,7 +123,7 @@ mclapply(1:nrow(sdPinput), function(i)
     write(" ",jmProg,append=T)
     write("delimiter = return;",jmProg,append=T)
   }
-}, mc.cores = 1)
+}, mc.cores = length(tau))
 
 
 rm(list = grep(paste(env.pre, collapse = "|"), ls(), invert = T, value = T))

@@ -1,4 +1,8 @@
 env.pre <- ls()
+if (!require("foreign")) {install.packages("foreign")}
+if (!require("car")) {install.packages("car")}
+if (!require("BayesX")) {install.packages("BayesX")}
+
 ## Prepare data for estimation and add spatial information
 dat <- read.table("./02_data/nigeria.raw", header = T)
 
