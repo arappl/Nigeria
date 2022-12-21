@@ -5,11 +5,6 @@ if (!require("sdPrior")) {install.packages("sdPrior")}
 if (!require("MASS")) {install.packages("MASS")}
 if (!require("parallel")) {install.packages("parallel")}
 
-if(!exists("cores")) {
-  cluster <- T
-  cores <- ifelse(cluster, 20, 1)
-}
-
 # read in neighbour matrix
 grafiles <- list.files("./02_data", ".gra", full.names = T, recursive = F)
 Kreg <- lapply(grafiles, read.gra)
