@@ -4,11 +4,6 @@ if (!require("MASS")) {install.packages("MASS")}
 if (!require("parallel")) {install.packages("parallel")}
 if (!require("mboost")) {install.packages("mboost")}
 
-if(!exists("cores")) {
-  cluster <- T
-  cores <- ifelse(cluster, 20, 1)
-}
-
 dat <- read.table("./02_data/nigeriaBXc.raw", header = T)
 
 tau <-c(0.05, 0.1, 0.5)
