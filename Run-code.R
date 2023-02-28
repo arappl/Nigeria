@@ -1,10 +1,19 @@
+rm(list = ls())
+
+# Setup folder structure
+if (!dir.exists("./01_raw-data")) {dir.create("./01_raw-data")}
+if (!dir.exists("./02_data")) {dir.create("./02_data")}
+if (!dir.exists("./03_output")) {dir.create("./03_output")}
+if (!dir.exists("./04_figures-and-tables")) {dir.create("./04_figures-and-tables")}
+
+## # ----------------------Acquiring the raw data -------------------------- #
 ## 1. You can find the data used on www.measuredhs.com :
 ## Data usage is free of charge for scientific usage. Please apply for "Nigeria 2013 - survey data" and "Nigeria 2013 - GPS data".
 ## 2. You are interested in downloading "Children's recode - NGKR6ADT.ZIP" from here
 # https://dhsprogram.com/customcf/legacy/data/download_dataset.cfm?Filename=NGKR6ADT.zip&Tp=1&Ctry_Code=NG&surv_id=438&dm=1&dmode=nm
 ## and the SHP file set with subnational boundaries from here (for selection aid see also "Finding_correct_shapefile.png")
 # https://spatialdata.dhsprogram.com/boundaries/#view=table&countryId=NG
-## 3. Then place the following files in the folder "01_raw-data":
+## 3. Then place the following files in the folder "01_raw-data" :
 ## -"NGKR6AFL.DTA"
 ## -"sdr_subnational_boundaries.cpg
 ## -"sdr_subnational_boundaries.dbf"
@@ -14,8 +23,11 @@
 ## -"sdr_subnational_boundaries.shp"
 ## -"sdr_subnational_boundaries.shp.xml"
 ## -"sdr_subnational_boundaries.shx"
+## # ----------------------------------------------------------------------- #
 
-rm(list = ls())
+# Setting all packages to the versions used for this analysis. Please confirm prompt in console with "y"! 
+# This is temporary only for this particular R session. 
+renv::restore() 
 
 if (!require("foreign")) {install.packages("foreign")}
 if (!require("car")) {install.packages("car")}
@@ -28,9 +40,14 @@ if (!require("ggplot2")) {install.packages("ggplot2")}
 if (!require("kableExtra")) {install.packages("kableExtra")}
 if (!require("dplyr")) {install.packages("dplyr")}
 
-cluster <- F
+cluster <- T
 cores <- ifelse(cluster, 20, 1)
-BXpath <- "/home/arappl/zu_meinen_Dateien/"
+BXpath <- "" # Enter path to your local BayesX entity
+
+# ## 
+# User linear option and add choice of cross validation
+# ##
+
 
 # cleanse raw data
 source("./00_Data-preprocessing.R")
