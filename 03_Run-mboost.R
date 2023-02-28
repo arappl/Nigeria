@@ -1,4 +1,9 @@
 env.pre <- ls()
+if (!require("BayesX")) {install.packages("BayesX")}
+if (!require("MASS")) {install.packages("MASS")}
+if (!require("parallel")) {install.packages("parallel")}
+if (!require("mboost")) {install.packages("mboost")}
+
 dat <- read.table("./02_data/nigeriaBXc.raw", header = T)
 
 tau <-c(0.05, 0.1, 0.5)
@@ -30,7 +35,8 @@ fmadd <- stunting ~
   bols(caryes) +
   bmrf(DHSREGEN37, by = NULL, index = NULL, bnd = mapgra, df = 4, lambda = NULL, center = "spectralDecomp")
 
-set.seed(456321)
+
+set.seed(123456)
 lapply(tau, function(j) {
   gc()
   model <- gamboost(fmadd,

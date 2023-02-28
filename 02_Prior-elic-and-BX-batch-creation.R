@@ -1,5 +1,10 @@
 env.pre <- ls()
 
+if (!require("BayesX")) {install.packages("BayesX")}
+if (!require("sdPrior")) {install.packages("sdPrior")}
+if (!require("MASS")) {install.packages("MASS")}
+if (!require("parallel")) {install.packages("parallel")}
+
 # read in neighbour matrix
 grafiles <- list.files("./02_data", ".gra", full.names = T, recursive = F)
 Kreg <- lapply(grafiles, read.gra)

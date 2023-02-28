@@ -4,6 +4,8 @@ rm(list = ls())
 if (!dir.exists("./01_raw-data")) {dir.create("./01_raw-data")}
 if (!dir.exists("./02_data")) {dir.create("./02_data")}
 if (!dir.exists("./03_output")) {dir.create("./03_output")}
+if (!dir.exists("./03_output/01_BayesX")) {dir.create("./03_output/01_BayesX")}
+if (!dir.exists("./03_output/02_mboost")) {dir.create("./03_output/02_mboost")}
 if (!dir.exists("./04_figures-and-tables")) {dir.create("./04_figures-and-tables")}
 
 ## # ----------------------Acquiring the raw data -------------------------- #
